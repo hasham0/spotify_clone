@@ -1,13 +1,24 @@
+import mongoose from "mongoose";
 import Album from "../../models/album.model.js";
+
+const getAlbumsService = async () => {
+    return await Album.find();
+};
+
+const getAlbumByIdService = async (id) => {
+    return await Album.findById({
+        _id: mongoose.Types.ObjectId(id),
+    }).populate("songs");
+};
 
 const findAndUpdateAlbumService = async (type, albumId, songId) => {
     switch (type) {
         case "push":
             await Album.findByIdAndUpdate(
-                { _id: albumId },
+                { _id: mongoose.Types.ObjectId(albumId) },
                 {
                     $push: {
-                        song: songId,
+                        song: mongoose.Types.ObjectId(songId),
                     },
                 },
                 { new: true }
@@ -15,10 +26,10 @@ const findAndUpdateAlbumService = async (type, albumId, songId) => {
             break;
         case "pull":
             await Album.findByIdAndUpdate(
-                { _id: albumId },
+                { _id: mongoose.Types.ObjectId(albumId) },
                 {
                     $pull: {
-                        song: songId,
+                        song: mongoose.Types.ObjectId(songId),
                     },
                 },
                 { new: true }
@@ -34,7 +45,13 @@ const createAlbumService = async ({ title, artist, imageUrl, releaseYear }) => {
 };
 
 const deleteAlbumService = async (albumId) => {
-    return await Album.deleteMany({ albumId });
+    return await Album.deleteMany({ _id: mongoose.Types.ObjectId(albumId) });
 };
 
-export { findAndUpdateAlbumService, createAlbumService, deleteAlbumService };
+export {
+    getAlbumsService,
+    getAlbumByIdService,
+    findAndUpdateAlbumService,
+    createAlbumService,
+    deleteAlbumService,
+};

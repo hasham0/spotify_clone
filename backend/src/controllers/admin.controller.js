@@ -46,8 +46,8 @@ const deleteAlbum = asyncHandler(async (request, response) => {
     if (!errors.isEmpty()) {
         throw new ValidationError(errors.array());
     }
-    const { id } = request.params;
-    await deleteAlbumService(id);
+    const { _id } = request.params;
+    await deleteAlbumService(_id);
     return response.status(200).json({
         message: "Album delete successfully",
     });
@@ -100,10 +100,10 @@ const deleteSong = asyncHandler(async (request, response) => {
     }
 
     // extract song id from params
-    const { id } = request.params;
+    const { _id } = request.params;
 
     // fetch song details and if song belongs to album update song array
-    const song = await findSongService(id);
+    const song = await findSongService(_id);
     if (song.albumId) {
         // throw new CustomError("album not found", 401);
         // await Album.findByIdAndUpdate(
@@ -117,7 +117,7 @@ const deleteSong = asyncHandler(async (request, response) => {
     }
 
     // delete song
-    await deleteSongService(id);
+    await deleteSongService(_id);
 
     return response.status(200).json({ message: "Song deleted successfully" });
 });

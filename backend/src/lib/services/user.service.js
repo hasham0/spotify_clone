@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 import User from "../../models/user.model.js";
 
+const getAllUserService = async (userId) => {
+    return await User.find({ clerkId: { $ne: userId } });
+};
+
 const findOneUserService = async (id) => {
     return await User.findOne({
         clerkId: mongoose.isValidObjectId(id)
@@ -11,10 +15,12 @@ const findOneUserService = async (id) => {
 
 const createUserService = async ({ id, firstname, lastname, imageUrl }) => {
     return await User.create({
-        clerkId: id,
+        clerkId: mongoose.isValidObjectId(id)
+            ? mongoose.Types.ObjectId(id)
+            : id,
         fullname: `${firstname} ${lastname}`,
         imageUrl,
     });
 };
 
-export { findOneUserService, createUserService };
+export { getAllUserService, findOneUserService, createUserService };

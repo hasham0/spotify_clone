@@ -17,7 +17,7 @@ import authRoutes from "./routes/auth.route.js";
 import adminRoutes from "./routes/admin.route.js";
 import albumRoutes from "./routes/album.route.js";
 import songRoutes from "./routes/song.route.js";
-import statsRoutes from "./routes/statistics.route.js";
+import statisticsRoutes from "./routes/statistics.route.js";
 
 // import global level error handle middlewares
 import errorMiddleware from "./middlewares/error.middleware.js";
@@ -57,7 +57,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/album", albumRoutes);
-app.use("/api/stats", statsRoutes);
+app.use("/api/statistics", statisticsRoutes);
 
 // set global level error handling middlwere
 app.use(errorMiddleware);

@@ -55,9 +55,9 @@ router.route("/createAlbum").post(
 );
 
 router
-    .route("/deleteAlbum/:id")
+    .route("/deleteAlbum/:_id")
     .delete(
-        [param("id").isString().withMessage("album id is required")],
+        [param("_id").isString().withMessage("album id is required")],
         deleteAlbum
     );
 
@@ -99,12 +99,12 @@ router.route("/createSong").post(
 );
 
 router
-    .route("/deleteSong/:id")
+    .route("/deleteSong/:_id")
     .delete(
         [
             authMiddleware,
             adminMiddleware,
-            param("id").isString().withMessage("album id is required"),
+            param("_id").isString().withMessage("song id is required"),
         ],
         deleteSong
     );
