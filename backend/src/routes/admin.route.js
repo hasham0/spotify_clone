@@ -13,6 +13,7 @@ import {
 import { body, param } from "express-validator";
 const router = Router();
 
+// global middlewares for all routes
 router.use([authMiddleware, adminMiddleware]);
 
 router.route("/checkAdmin").get(checkAdmin);

@@ -1,8 +1,8 @@
-//import { CustomError } from "../lib/utils/customize-error-messages.js";
 import { getTotalStatisticsService } from "../lib/services/statistics.service.js";
 import asyncHandler from "../middlewares/async-handler.middleware.js";
 
 const getTotalStatistics = asyncHandler(async (request, response) => {
+    // retrieve all statistics
     const [totalSongs, totalUsers, totalAlbum, uniqueArtist] =
         await getTotalStatisticsService();
 

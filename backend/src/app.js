@@ -44,9 +44,8 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(
     cors({
-        origin: process.env.CROSS_ORIGIN,
+        origin: process.env.CROSS_ORIGIN, // Allow frontend requests
         credentials: true,
-        allowedHeaders: ["Content-Type", "Authorization"],
         methods: ["GET", "POST", "PUT", "DELETE"],
     })
 );

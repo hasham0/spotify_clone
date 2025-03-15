@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 function errorMiddleware(error, req, res, next) {
     let statusCode = error.statusCode || 500;
     let message = error.message || "Something went wrong";
@@ -35,7 +37,10 @@ function errorMiddleware(error, req, res, next) {
     // Send response to the user
     return res.status(statusCode).json({
         success: false,
-        message,
+        message:
+            process.env.NODE_ENV === "production"
+                ? "Internal server error"
+                : message,
         errors: errors || [],
     });
 }

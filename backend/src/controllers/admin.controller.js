@@ -25,16 +25,21 @@ const createAlbum = asyncHandler(async (request, response) => {
     if (!errors.isEmpty()) {
         throw new ValidationError(errors.array());
     }
+    // extract data from body
     const { title, artist, releaseYear } = request.body;
     const { imageFile } = request.files;
+
+    // upload image file to cloudinary
     const imageUrl = await uploadeToCloudinary(imageFile);
 
+    // create new album
     const album = await createAlbumService({
         title,
         artist,
         imageUrl,
         releaseYear,
     });
+
     return response.status(201).json({
         album,
     });
@@ -46,8 +51,13 @@ const deleteAlbum = asyncHandler(async (request, response) => {
     if (!errors.isEmpty()) {
         throw new ValidationError(errors.array());
     }
+
+    // extract album id
     const { _id } = request.params;
+
+    // delete album
     await deleteAlbumService(_id);
+
     return response.status(200).json({
         message: "Album delete successfully",
     });
@@ -83,9 +93,7 @@ const createSong = asyncHandler(async (request, response) => {
     });
 
     // update song using ablum id
-    if (albumId) {
-        await findAndUpdateAlbumService("push", albumId, song._id);
-    }
+    await findAndUpdateAlbumService("push", albumId, song._id);
 
     return response.status(200).json({
         song,
@@ -104,17 +112,10 @@ const deleteSong = asyncHandler(async (request, response) => {
 
     // fetch song details and if song belongs to album update song array
     const song = await findSongService(_id);
-    if (song.albumId) {
-        // throw new CustomError("album not found", 401);
-        // await Album.findByIdAndUpdate(
-        //     { _id: mongoose.Types.ObjectId(song.albumId) },
-        //     {
-        //         $pull: { songs: song._id },
-        //     },
-        //     { new: true }
-        // );
-        await findAndUpdateAlbumService("pull", song.albumId, song._id);
+    if (!(song && song.albumId)) {
+        throw new CustomError("album not found", 401);
     }
+    await findAndUpdateAlbumService("pull", song.albumId, song._id);
 
     // delete song
     await deleteSongService(_id);

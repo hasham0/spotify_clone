@@ -3,6 +3,6 @@ import { checkAuth } from "../controllers/auth.controller.js";
 
 const router = Router();
 
-router.route("/callback").post(checkAuth);
+router.route("/auth-callback").post(checkAuth);
 
 export default router;
