@@ -8,6 +8,7 @@ const authMiddleware = asyncHandler(async (request, response, next) => {
         if (!request.auth.userId) {
             throw new CustomError("Unauthorize - you must be logged in", 403);
         }
+        request.user = request.auth;
         next();
     } catch (error) {
         next(error);

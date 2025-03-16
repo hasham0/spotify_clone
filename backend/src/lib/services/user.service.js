@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import User from "../../models/user.model.js";
 
 const getAllUserService = async (userId) => {
-    return await User.find({ clerkId: { $ne: userId } });
+    // return await User.find({ clerkId: userId });
+    return await User.find();
 };
 
 const findOneUserService = async (id) => {

@@ -38,6 +38,6 @@ export interface MessageTS {
 export interface UserTS {
   _id: string;
   clerkId: string;
-  fullName: string;
+  fullname: string;
   imageUrl: string;
 }

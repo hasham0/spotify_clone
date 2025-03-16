@@ -15,11 +15,10 @@ export default function Album({}: Props) {
     if (!albumId) return;
     fetchAlbumById(albumId);
   }, [albumId]);
-  console.log(currentAlbum);
 
   return (
     <div className="h-full">
-      <ScrollArea className="h-full">
+      <ScrollArea className="h-full rounded-md">
         <div className="relative min-h-full">
           {/* <!-- bg gradient --> */}
           <div

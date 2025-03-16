@@ -2,7 +2,7 @@ import axiosInstance from "@/lib/axios";
 import { AlbumTS, SongTS } from "@/types";
 import { create } from "zustand";
 
-interface MusicStoreState {
+interface MusicStoreStateTS {
   albums: AlbumTS[];
   songs: SongTS[];
   isLoading: boolean;
@@ -12,7 +12,7 @@ interface MusicStoreState {
   fetchAlbumById: (id: string) => Promise<void>;
 }
 
-const useMusicStore = create<MusicStoreState>()((set) => ({
+const useMusicStore = create<MusicStoreStateTS>()((set) => ({
   albums: [],
   songs: [],
   isLoading: false,

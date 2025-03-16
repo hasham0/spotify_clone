@@ -4,7 +4,7 @@ import asyncHandler from "../middlewares/async-handler.middleware.js";
 
 const getAllUsers = asyncHandler(async (request, response) => {
     //  extract current user id
-    const currentUserId = request.user.Id;
+    const currentUserId = request.user.userId;
 
     // get all users except current user and validate
     const users = await getAllUserService(currentUserId);
