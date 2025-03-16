@@ -70,7 +70,7 @@ const LeftSideBar = ({}: Props) => {
                 {albums.map((album) => (
                   <Link
                     key={album._id}
-                    to={`/album/${album._id}`}
+                    to={`/albums/${album._id}`}
                     className="group flex cursor-pointer items-center gap-3 rounded-md p-2 hover:bg-zinc-800"
                   >
                     <img

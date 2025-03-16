@@ -7,7 +7,7 @@ const getAlbumsService = async () => {
 
 const getAlbumByIdService = async (id) => {
     return await Album.findById({
-        _id: mongoose.Types.ObjectId(id),
+        _id: id,
     }).populate("songs");
 };
 

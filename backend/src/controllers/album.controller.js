@@ -17,10 +17,10 @@ const getAllAlbums = asyncHandler(async (request, response) => {
 
 const getAlbumById = asyncHandler(async (request, response) => {
     // extract album id
-    const { id } = request.params;
+    const { _id } = request.params;
 
     // retrieve album and validate
-    const album = await getAlbumByIdService(id);
+    const album = await getAlbumByIdService(_id);
     if (!album) {
         throw new CustomError("Album songs not found", 400);
     }
