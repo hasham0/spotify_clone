@@ -14,7 +14,7 @@ import {
 } from "../lib/services/album.service.js";
 
 const checkAdmin = asyncHandler(async (request, response) => {
-    return response.status(200).json({ admin: true });
+    return response.status(200).json({ isAdmin: true });
 });
 
 // TODO: controllers for album
