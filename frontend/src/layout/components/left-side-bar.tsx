@@ -14,8 +14,9 @@ const LeftSideBar = ({}: Props) => {
   const { albums, fetchAlbum, isLoading } = useMusicStore();
 
   useEffect(() => {
-    fetchAlbum();
-  }, []);
+    const fetchValue = async () => await fetchAlbum();
+    fetchValue();
+  }, [fetchAlbum]);
 
   return (
     <div className="flex h-full flex-col gap-2">

@@ -13,7 +13,8 @@ const FriendsAcitivity = ({}: Props) => {
   const isPlaying = false;
   useEffect(() => {
     if (!user) return;
-    fetchUsers();
+    const fetchValue = async () => await fetchUsers();
+    fetchValue();
   }, [fetchUsers, user]);
 
   return (

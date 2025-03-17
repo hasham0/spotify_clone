@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatDuration } from "@/lib/services";
 import { useMusicStore } from "@/store/useMusicStore";
-import { Clock, Play } from "lucide-react";
+import { usePlayerStore } from "@/store/usePlayerStore";
+import { Clock, Pause, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -10,11 +11,29 @@ type Props = {};
 
 export default function Album({}: Props) {
   const { fetchAlbumById, currentAlbum } = useMusicStore();
+  const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
   const { albumId } = useParams<{ albumId: string }>();
   useEffect(() => {
     if (!albumId) return;
-    fetchAlbumById(albumId);
+    const fetchValue = async () => await fetchAlbumById(albumId);
+
+    fetchValue();
   }, [albumId]);
+
+  const handleToggleAlbum = () => {
+    if (!currentAlbum) return;
+
+    const isCurrentAlbumPlaying = currentAlbum?.songs.some(
+      (song) => song._id === currentSong?._id,
+    );
+
+    if (isCurrentAlbumPlaying) togglePlay();
+    else playAlbum(currentAlbum.songs, 0);
+  };
+  const handlePlayAlbum = (index: number) => {
+    if (!currentAlbum) return;
+    playAlbum(currentAlbum?.songs, index);
+  };
 
   return (
     <div className="h-full">
@@ -51,11 +70,18 @@ export default function Album({}: Props) {
             {/* <!--  play button --> */}
             <div className="flex items-center gap-6 px-6 pb-4">
               <Button
-                // onClick={handlePlayAlbum}
+                onClick={handleToggleAlbum}
                 size="icon"
                 className="h-14 w-14 rounded-full bg-green-500 transition-all hover:scale-105 hover:bg-green-400"
               >
-                <Play className="size-7 text-black" />
+                {isPlaying &&
+                currentAlbum?.songs.some(
+                  (song) => song._id === currentSong?._id,
+                ) ? (
+                  <Pause className="h-7 w-7 text-black" />
+                ) : (
+                  <Play className="h-7 w-7 text-black" />
+                )}
               </Button>
             </div>
 
@@ -74,16 +100,25 @@ export default function Album({}: Props) {
               <div className="border-2 border-black px-6">
                 <div className="space-y-2 py-4">
                   {currentAlbum?.songs.map((song, index: number) => {
+                    const isCurrentSong =
+                      currentAlbum?.songs[index] === currentSong;
                     return (
                       <div
+                        onClick={() => handlePlayAlbum(index)}
                         key={song._id}
                         className={`group grid cursor-pointer grid-cols-[16px_4fr_2fr_1fr] gap-4 rounded-md px-4 py-2 text-sm text-zinc-400 hover:bg-white/5`}
                       >
                         <div className="flex items-center justify-center">
-                          <span className="group-hover:hidden">
-                            {index + 1}
-                          </span>
-                          <Play className="hidden size-4 group-hover:block" />
+                          {isCurrentSong && isPlaying ? (
+                            <div className="size-4 text-green-500">♫</div>
+                          ) : (
+                            <span className="group-hover:hidden">
+                              {index + 1}
+                            </span>
+                          )}
+                          {!isCurrentSong && (
+                            <Play className="hidden h-4 w-4 group-hover:block" />
+                          )}
                         </div>
                         <div className="flex items-center gap-3">
                           <img

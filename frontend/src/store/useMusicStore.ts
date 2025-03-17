@@ -44,7 +44,7 @@ const useMusicStore = create<MusicStoreStateTS>()((set) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await axiosInstance.get(`/api/albums/${id}`);
-      set({ currentAlbum: response.data.albums });
+      set({ currentAlbum: response.data.album });
     } catch (error) {
       console.error("🚀 ~ fetchAlbumById: ~ error:", error);
       const err = error as unknown as { message: string };

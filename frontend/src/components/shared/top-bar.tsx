@@ -17,9 +17,8 @@ type Props = {};
 const Topbar = ({}: Props) => {
   const { checkAdminStatus, isAdmin } = useAuthStore();
   useEffect(() => {
-    const fetchAdminStatus = async () => {
-      await checkAdminStatus();
-    };
+    const fetchAdminStatus = async () => await checkAdminStatus();
+
     fetchAdminStatus();
   }, [checkAdminStatus]);
 
