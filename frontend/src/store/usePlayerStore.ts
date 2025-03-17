@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import axiosInstance from "@/lib/axios";
 import { SongTS } from "@/types";
 
 interface PlayerStoreStateTS {

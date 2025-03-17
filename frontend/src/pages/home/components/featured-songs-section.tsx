@@ -1,5 +1,6 @@
 import FeaturedSongsSkeleton from "@/components/skeletons/featured-songs-skeleton";
 import { useMusicStore } from "@/store/useMusicStore";
+import PlayButton from "./play-button";
 
 type Props = {};
 
@@ -26,7 +27,7 @@ const FeaturedSongsSection = ({}: Props) => {
             <p className="truncate font-medium">{song.title}</p>
             <p className="truncate text-sm text-zinc-400">{song.artist}</p>
           </div>
-          {/* <PlayButton song={song} /> */}
+          <PlayButton song={song} />
         </div>
       ))}
     </div>

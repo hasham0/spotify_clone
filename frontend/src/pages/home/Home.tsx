@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import FeaturedSongsSection from "./components/featured-songs-section";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SectionSongsGrid from "./components/section-songs-grid";
+import { usePlayerStore } from "@/store/usePlayerStore";
 
 type Props = {};
 
@@ -11,6 +12,7 @@ export default function Home({}: Props) {
   const {
     isLoading,
     madeForYourSongs,
+    featuredSongs,
     trendingSongs,
     fetchFeaturedSongs,
     fetchMadeForYouSongs,
@@ -25,6 +27,18 @@ export default function Home({}: Props) {
     };
     fetchValue();
   }, [fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs]);
+
+  const { initilizeQueue } = usePlayerStore();
+
+  useEffect(() => {
+    if (
+      madeForYourSongs.length > 0 &&
+      trendingSongs.length > 0 &&
+      featuredSongs.length > 0
+    ) {
+      initilizeQueue([...featuredSongs, ...trendingSongs, ...madeForYourSongs]);
+    }
+  }, [initilizeQueue, featuredSongs, madeForYourSongs, trendingSongs]);
 
   return (
     <div className="overflow-hidden rounded-md">
