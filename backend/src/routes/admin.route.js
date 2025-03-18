@@ -63,7 +63,7 @@ router
     );
 
 // TODO: routes for song
-router.route("/createSong").post(
+router.route("/addSong").post(
     [
         body("title")
             .isLength({ min: 3 })

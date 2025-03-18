@@ -6,6 +6,9 @@ import AuthProvider from "./providers/AuthProvider";
 import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
 import Chat from "./pages/chat/Chat";
 import Album from "./pages/album/Album";
+import Admin from "./pages/admin/Admin";
+import AdminProviderWrapper from "./pages/admin/providers/Admin-Provider-Wrapper";
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <>
@@ -17,6 +20,9 @@ function App() {
               path="/sso-callback"
               element={<AuthenticateWithRedirectCallback />}
             />
+            <Route element={<AdminProviderWrapper />}>
+              <Route path="/admin" element={<Admin />} />
+            </Route>
             <Route element={<MainLayout />}>
               <Route path="/" index element={<Home />} />
               <Route path="/chat" index element={<Chat />} />
@@ -24,6 +30,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+        <Toaster />
       </AuthProvider>
     </>
   );

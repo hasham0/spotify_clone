@@ -5,15 +5,15 @@ import PlayButton from "./play-button";
 type Props = {};
 
 const FeaturedSongsSection = ({}: Props) => {
-  const { isLoading, featuredSongs, error } = useMusicStore();
+  const { featuredSongs, error } = useMusicStore();
 
-  if (isLoading) return <FeaturedSongsSkeleton />;
+  if (featuredSongs.isFeaturedSongsLoading) return <FeaturedSongsSkeleton />;
 
   if (error) return <p className="mb-4 text-lg text-red-500">{error}</p>;
 
   return (
     <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      {featuredSongs.map((song) => (
+      {featuredSongs.featuredSongs.map((song) => (
         <div
           key={song._id}
           className="group relative flex cursor-pointer items-center overflow-hidden rounded-md bg-zinc-800/50 transition-colors hover:bg-zinc-700/50"

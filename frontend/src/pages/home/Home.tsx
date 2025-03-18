@@ -10,7 +10,6 @@ type Props = {};
 
 export default function Home({}: Props) {
   const {
-    isLoading,
     madeForYourSongs,
     featuredSongs,
     trendingSongs,
@@ -32,11 +31,15 @@ export default function Home({}: Props) {
 
   useEffect(() => {
     if (
-      madeForYourSongs.length > 0 &&
-      trendingSongs.length > 0 &&
-      featuredSongs.length > 0
+      madeForYourSongs.madeForYourSongs?.length > 0 &&
+      trendingSongs.trendingSongs?.length > 0 &&
+      featuredSongs.featuredSongs?.length > 0
     ) {
-      initilizeQueue([...featuredSongs, ...trendingSongs, ...madeForYourSongs]);
+      initilizeQueue([
+        ...featuredSongs.featuredSongs,
+        ...trendingSongs.trendingSongs,
+        ...madeForYourSongs.madeForYourSongs,
+      ]);
     }
   }, [initilizeQueue, featuredSongs, madeForYourSongs, trendingSongs]);
 
@@ -52,13 +55,13 @@ export default function Home({}: Props) {
           <div className="space-y-8">
             <SectionSongsGrid
               title="Made for You"
-              songs={madeForYourSongs}
-              isLoading={isLoading}
+              songs={madeForYourSongs.madeForYourSongs}
+              isLoading={madeForYourSongs.isMadeForYourSongsLoading}
             />
             <SectionSongsGrid
-              title="Made for You"
-              songs={trendingSongs}
-              isLoading={isLoading}
+              title="Trending Songs"
+              songs={trendingSongs?.trendingSongs}
+              isLoading={trendingSongs?.isTrendingSongsLoading}
             />
           </div>
         </div>
