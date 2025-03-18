@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/select";
 import axiosInstance from "@/lib/axios";
 import { useMusicStore } from "@/store/useMusicStore";
-import { SongTS } from "@/types";
 import { Plus, Upload } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
