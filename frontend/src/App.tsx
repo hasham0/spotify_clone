@@ -9,6 +9,7 @@ import Album from "./pages/album/Album";
 import Admin from "./pages/admin/Admin";
 import AdminProviderWrapper from "./pages/admin/providers/Admin-Provider-Wrapper";
 import { Toaster } from "react-hot-toast";
+import NotFound from "./pages/404/NotFound";
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
               <Route path="/" index element={<Home />} />
               <Route path="/chat" index element={<Chat />} />
               <Route path="/albums/:albumId" index element={<Album />} />
+              <Route path="/*" element={<NotFound />} />
             </Route>
           </Routes>
         </BrowserRouter>
