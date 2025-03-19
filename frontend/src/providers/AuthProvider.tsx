@@ -3,6 +3,7 @@ import axiosInstance from "@/lib/axios";
 import { useAuth } from "@clerk/clerk-react";
 import { ReactNode, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useChatStore } from "@/store/useChatStore";
 type Props = {
   children: ReactNode;
 };
@@ -17,7 +18,8 @@ const updateApiToken = (token: string | null) => {
 };
 
 export default function AuthProvider({ children }: Props) {
-  const { getToken } = useAuth();
+  const { getToken, userId } = useAuth();
+  const { initializeSocket, disconnectSocket } = useChatStore();
   const [loading, setLoading] = useState(true);
   const { checkAdminStatus } = useAuthStore();
   useEffect(() => {
@@ -27,6 +29,9 @@ export default function AuthProvider({ children }: Props) {
         updateApiToken(token);
         if (token) {
           checkAdminStatus();
+          if (userId) {
+            initializeSocket(userId);
+          }
         }
       } catch (error) {
         updateApiToken(null);
@@ -36,7 +41,10 @@ export default function AuthProvider({ children }: Props) {
       }
     };
     initAuth();
-  }, [getToken]);
+    return () => {
+      disconnectSocket();
+    };
+  }, [getToken, userId, checkAdminStatus, initializeSocket, disconnectSocket]);
 
   if (loading) {
     return (

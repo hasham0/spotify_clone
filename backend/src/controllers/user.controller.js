@@ -15,4 +15,12 @@ const getAllUsers = asyncHandler(async (request, response) => {
     return response.status(200).json({ users });
 });
 
-export { getAllUsers };
+const getMessages = asyncHandler(async (request, response) => {
+    const myId = request.user.userId;
+    const { _id } = request.params;
+
+    const messages = await getMessagesService(_id, myId);
+    return response.status(200).json({ messages });
+});
+
+export { getAllUsers, getMessages };
