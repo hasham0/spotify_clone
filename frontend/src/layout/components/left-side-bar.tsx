@@ -11,12 +11,12 @@ import { Link } from "react-router-dom";
 type Props = {};
 
 const LeftSideBar = ({}: Props) => {
-  const { albums, fetchAlbum } = useMusicStore();
+  const { albums, fetchAlbums } = useMusicStore();
 
   useEffect(() => {
-    const fetchValue = async () => await fetchAlbum();
+    const fetchValue = async () => await fetchAlbums();
     fetchValue();
-  }, [fetchAlbum]);
+  }, [fetchAlbums]);
 
   return (
     <div className="flex h-full flex-col gap-2">

@@ -32,7 +32,7 @@ const useChatStore = create<ChatStoreStateTS>()((set, get) => ({
   users: [],
   isLoading: false,
   error: null,
-  socket: null,
+  socket: socket,
   isConnected: false,
   onlineUsers: new Set<string>(),
   userActivities: new Map<string, string>(),
@@ -105,7 +105,7 @@ const useChatStore = create<ChatStoreStateTS>()((set, get) => ({
     }
   },
   sendMessage: (receiverId, senderId, content) => {
-    const socket = get().socket();
+    const socket = get().socket;
     if (!socket) return;
     socket.emit("send_message", { receiverId, senderId, content });
   },

@@ -30,25 +30,25 @@ function initilizeSocket(server) {
         });
 
         // update activity
-        socket.on("update_activity", (userId, activity) => {
+        socket.on("update_activity", ({ userId, activity }) => {
             userActivities.set(userId, activity);
-            io.emit("activity_updated", { userId, activity });
+            io.emit("update_activity", { userId, activity });
         });
 
         // send message
         socket.on("send_message", async (data) => {
             try {
-                const { senderId, reciverId, content } = data;
+                const { senderId, receiverId, content } = data;
                 const message = await sendMessageService(
                     senderId,
-                    reciverId,
+                    receiverId,
                     content
                 );
-                const recevierSocketId = userSockets.get(reciverId);
+                const recevierSocketId = userSockets.get(receiverId);
                 if (recevierSocketId) {
                     io.to(recevierSocketId).emit("received_message", message);
                 }
-                socket.emit("message_sent", message);
+                socket.emit("send_message", message);
             } catch (error) {
                 console.error("🚀 ~ socket.on ~ error:", error);
                 socket.emit("message_error", error.message);

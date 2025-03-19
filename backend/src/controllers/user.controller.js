@@ -1,4 +1,7 @@
-import { getAllUserService } from "../lib/services/user.service.js";
+import {
+    getAllUserService,
+    getMessagesService,
+} from "../lib/services/user.service.js";
 import { CustomError } from "../lib/utils/customize-error-messages.js";
 import asyncHandler from "../middlewares/async-handler.middleware.js";
 
@@ -17,9 +20,8 @@ const getAllUsers = asyncHandler(async (request, response) => {
 
 const getMessages = asyncHandler(async (request, response) => {
     const myId = request.user.userId;
-    const { _id } = request.params;
-
-    const messages = await getMessagesService(_id, myId);
+    const { _id: userId } = request.params;
+    const messages = await getMessagesService(userId, myId);
     return response.status(200).json({ messages });
 });
 

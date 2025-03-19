@@ -40,7 +40,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(
     cors({

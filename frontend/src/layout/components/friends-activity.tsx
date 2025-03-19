@@ -9,8 +9,7 @@ type Props = {};
 
 const FriendsAcitivity = ({}: Props) => {
   const { user } = useUser();
-  const { users, fetchUsers } = useChatStore();
-  const isPlaying = false;
+  const { users, fetchUsers, onlineUsers, userActivities } = useChatStore();
   useEffect(() => {
     if (!user) return;
     const fetchValue = async () => await fetchUsers();
@@ -29,8 +28,9 @@ const FriendsAcitivity = ({}: Props) => {
       <ScrollArea className="flex-1">
         <div className="space-y-4 p-4">
           {users.map((user) => {
-            // const activity = userActivities.get(user.clerkId);
-            //            const isPlaying = activity && activity !== "Idle";
+            const activity = userActivities.get(user.clerkId);
+            const isPlaying = activity && activity !== "Idle";
+
             return (
               <div
                 className="group cursor-pointer rounded-md p-3 transition-colors hover:bg-zinc-800/50"
@@ -43,7 +43,7 @@ const FriendsAcitivity = ({}: Props) => {
                       <AvatarFallback>{user.fullname}</AvatarFallback>
                     </Avatar>
                     <div
-                      // className={`absolute right-0 bottom-0 h-3 w-3 rounded-full border-2 border-zinc-900 ${onlineUsers.has(user.clerkId) ? "bg-green-500" : "bg-zinc-500"} `}
+                      className={`absolute right-0 bottom-0 h-3 w-3 rounded-full border-2 border-zinc-900 ${onlineUsers.has(user.clerkId) ? "bg-green-500" : "bg-zinc-500"} `}
                       aria-hidden="true"
                     />
                   </div>
@@ -59,10 +59,10 @@ const FriendsAcitivity = ({}: Props) => {
                     {isPlaying ? (
                       <div className="mt-1">
                         <div className="mt-1 truncate text-sm font-medium text-white">
-                          {/* {activity.replace("Playing ", "").split(" by ")[0]} */}
+                          {activity.replace("Playing ", "").split(" by ")[0]}
                         </div>
                         <div className="truncate text-xs text-zinc-400">
-                          {/* {activity.split(" by ")[1]} */}
+                          {activity.split(" by ")[1]}
                         </div>
                       </div>
                     ) : (
