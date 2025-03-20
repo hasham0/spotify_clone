@@ -15,10 +15,10 @@ const findAndUpdateAlbumService = async (type, albumId, songId) => {
     switch (type) {
         case "push":
             await Album.findByIdAndUpdate(
-                { _id: mongoose.Types.ObjectId(albumId) },
+                { _id: albumId },
                 {
                     $push: {
-                        song: mongoose.Types.ObjectId(songId),
+                        song: songId,
                     },
                 },
                 { new: true }
@@ -26,10 +26,10 @@ const findAndUpdateAlbumService = async (type, albumId, songId) => {
             break;
         case "pull":
             await Album.findByIdAndUpdate(
-                { _id: mongoose.Types.ObjectId(albumId) },
+                { _id: albumId },
                 {
                     $pull: {
-                        song: mongoose.Types.ObjectId(songId),
+                        song: songId,
                     },
                 },
                 { new: true }
@@ -45,7 +45,7 @@ const createAlbumService = async ({ title, artist, imageUrl, releaseYear }) => {
 };
 
 const deleteAlbumService = async (albumId) => {
-    return await Album.deleteMany({ _id: mongoose.Types.ObjectId(albumId) });
+    return await Album.deleteMany({ _id: albumId });
 };
 
 export {

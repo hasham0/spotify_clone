@@ -36,7 +36,7 @@ type SongFilesTS = {
 };
 
 const AddSongDialog = ({}: Props) => {
-  const { albums } = useMusicStore();
+  const { albums, addSong } = useMusicStore();
   const [songDialogOpen, setSongDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [newSong, setNewSong] = useState<NewSongTS>({
@@ -67,11 +67,7 @@ const AddSongDialog = ({}: Props) => {
       }
       formData.append("audioFile", files.audioFile);
       formData.append("imageFile", files.imageFile);
-      await axiosInstance.post("/api/admin/addSong", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await addSong(formData);
       setNewSong({
         album: "",
         artist: "",

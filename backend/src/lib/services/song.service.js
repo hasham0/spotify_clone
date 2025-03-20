@@ -24,12 +24,12 @@ const createSongService = async ({
 };
 
 const findSongService = async (id) => {
-    return await Song.findById({ _id: mongoose.Types.ObjectId(id) });
+    return await Song.findById({ _id: id });
 };
 
 const deleteSongService = async (id) => {
     return await Song.findByIdAndDelete({
-        _id: mongoose.Types.ObjectId(id),
+        _id: id,
     });
 };
 

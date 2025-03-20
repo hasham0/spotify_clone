@@ -9,7 +9,15 @@ import { useMusicStore } from "@/store/useMusicStore";
 type Props = {};
 
 export default function Admin({}: Props) {
-  const { fetchAllSongs, fetchStatistics, fetchAlbums } = useMusicStore();
+  const {
+    statistics,
+    fetchAllSongs,
+    fetchStatistics,
+    fetchAlbums,
+    deleteAlbum,
+    deleteSong,
+    addSong,
+  } = useMusicStore();
   useEffect(() => {
     const fetchValues = async () => {
       await fetchStatistics();
@@ -17,10 +25,17 @@ export default function Admin({}: Props) {
       await fetchAllSongs();
     };
     fetchValues();
-  }, [fetchAlbums, fetchAllSongs, fetchStatistics]);
+  }, [
+    fetchAlbums,
+    fetchAllSongs,
+    fetchStatistics,
+    deleteAlbum,
+    deleteSong,
+    addSong,
+  ]);
   return (
     <div>
-      <DashboardStatistics />
+      <DashboardStatistics statistics={statistics.statistics} />
       <Tabs defaultValue="songs" className="space-y-6">
         <TabsList className="bg-zinc-800/50 p-1">
           <TabsTrigger

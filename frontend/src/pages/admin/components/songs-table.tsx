@@ -26,6 +26,7 @@ const SongsTable = ({}: Props) => {
       <div className="text-red-400">{error}</div>
     </div>;
   }
+
   return (
     <Table>
       <TableHeader>

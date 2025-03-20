@@ -12,6 +12,7 @@ import {
     deleteAlbumService,
     findAndUpdateAlbumService,
 } from "../lib/services/album.service.js";
+import fs from "fs";
 
 const checkAdmin = asyncHandler(async (request, response) => {
     return response.status(200).json({ isAdmin: true });
@@ -82,12 +83,27 @@ const createSong = asyncHandler(async (request, response) => {
     const audioUrl = await uploadeToCloudinary(audioFile);
     const imageUrl = await uploadeToCloudinary(imageFile);
 
+    fs.unlink(audioFile.tempFilePath, (err) => {
+        if (err) {
+            console.error("Error deleting temp file:", err);
+        } else {
+            console.log("Tempm audio file deleted successfully");
+        }
+    });
+    fs.unlink(imageFile.tempFilePath, (err) => {
+        if (err) {
+            console.error("Error deleting temp file:", err);
+        } else {
+            console.log("Temp image file deleted successfully");
+        }
+    });
+
     // create new song
     const song = await createSongService({
         title,
         artist,
-        imageUrl,
-        audioUrl,
+        audioFile: audioUrl,
+        imageFile: imageUrl,
         duration,
         albumId,
     });
@@ -96,7 +112,7 @@ const createSong = asyncHandler(async (request, response) => {
     await findAndUpdateAlbumService("push", albumId, song._id);
 
     return response.status(200).json({
-        song,
+        song: true,
     });
 });
 

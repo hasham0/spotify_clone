@@ -41,6 +41,7 @@ interface MusicStoreStateTS {
   fetchMadeForYouSongs: () => Promise<void>;
   fetchTrendingSongs: () => Promise<void>;
   fetchStatistics: () => Promise<void>;
+  addSong: (song: FormData) => Promise<void>;
   deleteSong: (id: string) => Promise<void>;
   deleteAlbum: (id: string) => Promise<void>;
 }
@@ -264,6 +265,31 @@ const useMusicStore = create<MusicStoreStateTS>()((set) => ({
           ...state.trendingSongs,
           isTrendingSongsLoading: false,
         },
+      }));
+    }
+  },
+
+  addSong: async (song) => {
+    set((state) => ({
+      songs: { ...state.songs, isSongsLoading: true },
+      error: null,
+    }));
+    try {
+      const response = await axiosInstance.post("/api/admin/addSong", song, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      set((state) => ({
+        songs: { ...state.songs, songs: [...state.songs.songs, response.data] },
+      }));
+      toast.success("Song added successfully");
+    } catch (error) {
+      const err = error as unknown as { message: string };
+      set({ error: err.message });
+    } finally {
+      set((state) => ({
+        songs: { ...state.songs, isSongsLoading: false },
       }));
     }
   },

@@ -17,17 +17,13 @@ const getMessagesService = async (userId, myId) => {
 
 const findOneUserService = async (id) => {
     return await User.findOne({
-        clerkId: mongoose.isValidObjectId(id)
-            ? mongoose.Types.ObjectId(id)
-            : id,
+        clerkId: mongoose.isValidObjectId(id) ? id : id,
     });
 };
 
 const createUserService = async ({ id, firstname, lastname, imageUrl }) => {
     return await User.create({
-        clerkId: mongoose.isValidObjectId(id)
-            ? mongoose.Types.ObjectId(id)
-            : id,
+        clerkId: mongoose.isValidObjectId(id) ? id : id,
         fullname: `${firstname} ${lastname}`,
         imageUrl,
     });

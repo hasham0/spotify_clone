@@ -30,19 +30,11 @@ router.route("/createAlbum").post(
         body("releaseYear")
             .isNumeric()
             .withMessage("release year is required and must be in number"),
-        body("duration")
-            .isNumeric()
-            .withMessage("duration is required and must be in number"),
         body("imageFile").custom((_, { req }) => {
             if (!req.files || !req.files.imageFile) {
                 throw new Error("All file is required");
             }
-            // const file = req.files.songFile;
-
-            // // Validate file type
-            // if (!file.mimetype.startsWith("audio/")) {
-            //     throw new Error("Only audio files are allowed");
-            // }
+            const file = req.files.imageFile;
 
             // Validate file size (e.g., max 5MB)
             if (file.size > 10 * 1024 * 1024) {
@@ -81,12 +73,12 @@ router.route("/addSong").post(
             if (!req.files || !req.files.audioFile || !req.files.imageFile) {
                 throw new Error("All file is required");
             }
-            // const file = req.files.songFile;
+            const file = req.files.audioFile;
 
-            // // Validate file type
-            // if (!file.mimetype.startsWith("audio/")) {
-            //     throw new Error("Only audio files are allowed");
-            // }
+            // Validate file type
+            if (!file.mimetype.startsWith("audio/")) {
+                throw new Error("Only audio files are allowed");
+            }
 
             // Validate file size (e.g., max 5MB)
             if (file.size > 10 * 1024 * 1024) {
