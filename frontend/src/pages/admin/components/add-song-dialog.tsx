@@ -27,7 +27,7 @@ type NewSongTS = {
   title: string;
   artist: string;
   album: string;
-  duration: string;
+  duration: string | number;
 };
 type SongFilesTS = {
   audioFile: File | null;
@@ -42,7 +42,7 @@ const AddSongDialog = ({}: Props) => {
     title: "",
     artist: "",
     album: "",
-    duration: "0",
+    duration: 0,
   });
   const [files, setFiles] = useState<SongFilesTS>({
     audioFile: null,
@@ -70,7 +70,7 @@ const AddSongDialog = ({}: Props) => {
       setNewSong({
         album: "",
         artist: "",
-        duration: "0",
+        duration: 0,
         title: "",
       });
 
@@ -192,12 +192,12 @@ const AddSongDialog = ({}: Props) => {
             <label className="text-sm font-medium">Duration (seconds)</label>
             <Input
               type="number"
-              min="0"
+              min={0}
               value={newSong.duration}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setNewSong({
                   ...newSong,
-                  duration: e.target.value || "0",
+                  duration: e.target.value || 0,
                 })
               }
               className="border-zinc-700 bg-zinc-800"

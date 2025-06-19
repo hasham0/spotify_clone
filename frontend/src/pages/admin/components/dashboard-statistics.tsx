@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 type Props = { statistics: any };
 
 const DashboardStatistics = ({ statistics }: Props) => {
-  const {  fetchStatistics } = useMusicStore();
+  const { fetchStatistics } = useMusicStore();
   const [stats, setStats] = useState({
     musicValue: statistics.statistics.totalSongs.toLocaleString(),
     albumValue: statistics.statistics.totalAlbums.toLocaleString(),
@@ -19,7 +19,7 @@ const DashboardStatistics = ({ statistics }: Props) => {
       albumValue: statistics.statistics.totalAlbums.toLocaleString(),
       artistValue: statistics.statistics.totalArtists.toLocaleString(),
       userValue: statistics.statistics.totalUsers.toLocaleString(),
-      });
+    });
   }, [statistics, fetchStatistics]);
   const statisticsData = [
     {
@@ -54,9 +54,9 @@ const DashboardStatistics = ({ statistics }: Props) => {
 
   return (
     <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {statisticsData.map((stat,index:number) => (
+      {statisticsData.map((stat, index: number) => (
         <StatisticsCard
-        key={index}
+          key={index}
           icon={stat.icon}
           label={stat.label}
           value={stat.value}
