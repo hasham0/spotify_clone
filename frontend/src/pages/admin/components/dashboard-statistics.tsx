@@ -6,23 +6,21 @@ import { useEffect, useState } from "react";
 type Props = { statistics: any };
 
 const DashboardStatistics = ({ statistics }: Props) => {
-  // const { statistics, fetchStatistics } = useMusicStore();
-  // const [stats, setStats] = useState({
-  //   musicValue: statistics.statistics.totalSongs,
-  //   albumValue: statistics.statistics.totalAlbums,
-  //   artistValue: statistics.statistics.totalArtists,
-  //   userValue: statistics.statistics.totalUsers,
-  // });
-  // console.log(stats);
-  // useEffect(() => {
-  //   setStats({
-  //     musicValue: statistics.statistics.totalSongs,
-  //     albumValue: statistics.statistics.totalAlbums,
-  //     artistValue: statistics.statistics.totalArtists,
-  //     userValue: statistics.statistics.totalUsers,
-  //   });
-  // }, [statistics, fetchStatistics]);
-  // console.log(stats);
+  const {  fetchStatistics } = useMusicStore();
+  const [stats, setStats] = useState({
+    musicValue: statistics.statistics.totalSongs,
+    albumValue: statistics.statistics.totalAlbums,
+    artistValue: statistics.statistics.totalArtists,
+    userValue: statistics.statistics.totalUsers,
+  });
+  useEffect(() => {
+    setStats({
+      musicValue: statistics.statistics.totalSongs,
+      albumValue: statistics.statistics.totalAlbums,
+      artistValue: statistics.statistics.totalArtists,
+      userValue: statistics.statistics.totalUsers,
+    });
+  }, [statistics, fetchStatistics]);
   const statisticsData = [
     {
       icon: ListMusic,
@@ -56,9 +54,9 @@ const DashboardStatistics = ({ statistics }: Props) => {
 
   return (
     <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {statisticsData.map((stat) => (
+      {statisticsData.map((stat,index:number) => (
         <StatisticsCard
-          key={stat.label}
+        key={index}
           icon={stat.icon}
           label={stat.label}
           value={stat.value}
