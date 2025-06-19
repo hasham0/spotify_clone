@@ -51,6 +51,11 @@ app.use(
   }),
 );
 
+app.use("/", (req, res, next) => {
+  res.send("backend running");
+});
+
+
 // set routes
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
