@@ -1,12 +1,12 @@
+import { useEffect } from "react";
+import { HomeIcon, Library, MessageCircleIcon } from "lucide-react";
+import { SignedIn } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 import PlaylistSkeleton from "@/components/skeletons/playlist-skeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/store/useMusicStore";
-import { SignedIn } from "@clerk/clerk-react";
-import { HomeIcon, Library, MessageCircleIcon } from "lucide-react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -29,7 +29,7 @@ const LeftSideBar = ({}: Props) => {
               buttonVariants({
                 variant: "ghost",
                 className: "w-full justify-start text-white hover:bg-zinc-800",
-              }),
+              })
             )}
           >
             <HomeIcon className="mr-2 size-5" />
@@ -44,7 +44,7 @@ const LeftSideBar = ({}: Props) => {
                   variant: "ghost",
                   className:
                     "w-full justify-start text-white hover:bg-zinc-800",
-                }),
+                })
               )}
             >
               <MessageCircleIcon className="mr-2 size-5" />

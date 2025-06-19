@@ -1,14 +1,14 @@
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import AudioPlayer from "./components/audio-player";
+import FriendsAcitivity from "./components/friends-activity";
+import LeftSideBar from "./components/left-side-bar";
+import PlayBackControls from "./components/play-back-controls";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { Outlet } from "react-router-dom";
-import LeftSideBar from "./components/left-side-bar";
-import FriendsAcitivity from "./components/friends-activity";
-import AudioPlayer from "./components/audio-player";
-import PlayBackControls from "./components/play-back-controls";
-import { useEffect, useState } from "react";
 
 export default function MainLayout() {
   const [isMobile, setIsMobile] = useState(false);

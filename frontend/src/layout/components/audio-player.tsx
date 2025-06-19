@@ -1,5 +1,5 @@
-import { usePlayerStore } from "@/store/usePlayerStore";
 import { useEffect, useRef } from "react";
+import { usePlayerStore } from "@/store/usePlayerStore";
 
 type Props = {};
 

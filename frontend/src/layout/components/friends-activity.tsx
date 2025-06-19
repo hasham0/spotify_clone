@@ -1,9 +1,9 @@
-import { useChatStore } from "@/store/useChatStore";
 import { useEffect } from "react";
 import { HeadphonesIcon, Music, Users } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useChatStore } from "@/store/useChatStore";
 
 type Props = {};
 

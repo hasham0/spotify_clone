@@ -1,16 +1,16 @@
+import { useEffect } from "react";
 import { LayoutDashboardIcon } from "lucide-react";
-import { Link } from "react-router-dom";
-import SignInOAuthButton from "./sign-in-o-auth-button";
 import {
+  SignOutButton,
   SignedIn,
   SignedOut,
-  SignOutButton,
   UserButton,
 } from "@clerk/clerk-react";
-import { useAuthStore } from "@/store/useAuthStore";
-import { useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 import { buttonVariants } from "../ui/button";
+import SignInOAuthButton from "./sign-in-o-auth-button";
+import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/useAuthStore";
 
 type Props = {};
 
@@ -36,7 +36,7 @@ const Topbar = ({}: Props) => {
             className={cn(
               buttonVariants({
                 variant: "outline",
-              }),
+              })
             )}
           >
             <LayoutDashboardIcon className="mr-2 size-4" />

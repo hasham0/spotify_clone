@@ -24,7 +24,7 @@ export default function Album({}: Props) {
     if (!currentAlbum) return;
 
     const isCurrentAlbumPlaying = currentAlbum.currentAlbum?.songs.some(
-      (song) => song._id === currentSong?._id,
+      (song) => song._id === currentSong?._id
     );
 
     if (isCurrentAlbumPlaying) togglePlay();
@@ -81,7 +81,7 @@ export default function Album({}: Props) {
               >
                 {isPlaying &&
                 currentAlbum?.currentAlbum?.songs.some(
-                  (song) => song._id === currentSong?._id,
+                  (song) => song._id === currentSong?._id
                 ) ? (
                   <Pause className="h-7 w-7 text-black" />
                 ) : (
@@ -148,7 +148,7 @@ export default function Album({}: Props) {
                           </div>
                         </div>
                       );
-                    },
+                    }
                   )}
                 </div>
               </div>

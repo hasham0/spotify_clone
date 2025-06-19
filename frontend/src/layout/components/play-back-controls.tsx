@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { usePlayerStore } from "@/store/usePlayerStore";
 import { useEffect, useRef, useState } from "react";
 import {
   Laptop2,
@@ -13,8 +11,10 @@ import {
   SkipForward,
   Volume1,
 } from "lucide-react";
-import { formatTime } from "@/lib/services";
+import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { formatTime } from "@/lib/services";
+import { usePlayerStore } from "@/store/usePlayerStore";
 
 type Props = {};
 

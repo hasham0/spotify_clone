@@ -1,141 +1,141 @@
-import { ValidationError } from "../lib/utils/customize-error-messages.js";
-import asyncHandler from "../middlewares/async-handler.middleware.js";
-import { validationResult } from "express-validator";
-import uploadeToCloudinary from "../lib/utils/cloudinary/uploadToCloudinary.js";
+import { ValidationError } from '../lib/utils/customize-error-messages.js';
+import asyncHandler from '../middlewares/async-handler.middleware.js';
+import { validationResult } from 'express-validator';
+import uploadeToCloudinary from '../lib/utils/cloudinary/uploadToCloudinary.js';
 import {
-    createSongService,
-    deleteSongService,
-    findSongService,
-} from "../lib/services/song.service.js";
+  createSongService,
+  deleteSongService,
+  findSongService,
+} from '../lib/services/song.service.js';
 import {
-    createAlbumService,
-    deleteAlbumService,
-    findAndUpdateAlbumService,
-} from "../lib/services/album.service.js";
-import fs from "fs";
+  createAlbumService,
+  deleteAlbumService,
+  findAndUpdateAlbumService,
+} from '../lib/services/album.service.js';
+import fs from 'fs';
 
 const checkAdmin = asyncHandler(async (request, response) => {
-    return response.status(200).json({ isAdmin: true });
+  return response.status(200).json({ isAdmin: true });
 });
 
 // TODO: controllers for album
 
 const createAlbum = asyncHandler(async (request, response) => {
-    // Validate request
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-        throw new ValidationError(errors.array());
-    }
-    // extract data from body
-    const { title, artist, releaseYear } = request.body;
-    const { imageFile } = request.files;
+  // Validate request
+  const errors = validationResult(request);
+  if (!errors.isEmpty()) {
+    throw new ValidationError(errors.array());
+  }
+  // extract data from body
+  const { title, artist, releaseYear } = request.body;
+  const { imageFile } = request.files;
 
-    // upload image file to cloudinary
-    const imageUrl = await uploadeToCloudinary(imageFile);
+  // upload image file to cloudinary
+  const imageUrl = await uploadeToCloudinary(imageFile);
 
-    // create new album
-    const album = await createAlbumService({
-        title,
-        artist,
-        imageUrl,
-        releaseYear,
-    });
+  // create new album
+  const album = await createAlbumService({
+    title,
+    artist,
+    imageUrl,
+    releaseYear,
+  });
 
-    return response.status(201).json({
-        album,
-    });
+  return response.status(201).json({
+    album,
+  });
 });
 
 const deleteAlbum = asyncHandler(async (request, response) => {
-    // Validate request
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-        throw new ValidationError(errors.array());
-    }
+  // Validate request
+  const errors = validationResult(request);
+  if (!errors.isEmpty()) {
+    throw new ValidationError(errors.array());
+  }
 
-    // extract album id
-    const { _id } = request.params;
+  // extract album id
+  const { _id } = request.params;
 
-    // delete album
-    await deleteAlbumService(_id);
+  // delete album
+  await deleteAlbumService(_id);
 
-    return response.status(200).json({
-        message: "Album delete successfully",
-    });
+  return response.status(200).json({
+    message: 'Album delete successfully',
+  });
 });
 
 // TODO: controllers for song
 
 const createSong = asyncHandler(async (request, response) => {
-    // Validate request
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-        throw new ValidationError(errors.array());
+  // Validate request
+  const errors = validationResult(request);
+  if (!errors.isEmpty()) {
+    throw new ValidationError(errors.array());
+  }
+
+  // extract data from body
+  const { title, artist, albumId, duration } = request.body;
+
+  // extract audo and image file
+  const { audioFile, imageFile } = request.files;
+
+  // upload image and audio file to cloudinary
+  const audioUrl = await uploadeToCloudinary(audioFile);
+  const imageUrl = await uploadeToCloudinary(imageFile);
+
+  fs.unlink(audioFile.tempFilePath, (err) => {
+    if (err) {
+      console.error('Error deleting temp file:', err);
+    } else {
+      console.log('Tempm audio file deleted successfully');
     }
+  });
+  fs.unlink(imageFile.tempFilePath, (err) => {
+    if (err) {
+      console.error('Error deleting temp file:', err);
+    } else {
+      console.log('Temp image file deleted successfully');
+    }
+  });
 
-    // extract data from body
-    const { title, artist, albumId, duration } = request.body;
+  // create new song
+  const song = await createSongService({
+    title,
+    artist,
+    audioFile: audioUrl,
+    imageFile: imageUrl,
+    duration,
+    albumId,
+  });
 
-    // extract audo and image file
-    const { audioFile, imageFile } = request.files;
+  // update song using ablum id
+  await findAndUpdateAlbumService('push', albumId, song._id);
 
-    // upload image and audio file to cloudinary
-    const audioUrl = await uploadeToCloudinary(audioFile);
-    const imageUrl = await uploadeToCloudinary(imageFile);
-
-    fs.unlink(audioFile.tempFilePath, (err) => {
-        if (err) {
-            console.error("Error deleting temp file:", err);
-        } else {
-            console.log("Tempm audio file deleted successfully");
-        }
-    });
-    fs.unlink(imageFile.tempFilePath, (err) => {
-        if (err) {
-            console.error("Error deleting temp file:", err);
-        } else {
-            console.log("Temp image file deleted successfully");
-        }
-    });
-
-    // create new song
-    const song = await createSongService({
-        title,
-        artist,
-        audioFile: audioUrl,
-        imageFile: imageUrl,
-        duration,
-        albumId,
-    });
-
-    // update song using ablum id
-    await findAndUpdateAlbumService("push", albumId, song._id);
-
-    return response.status(200).json({
-        song: true,
-    });
+  return response.status(200).json({
+    song: true,
+  });
 });
 
 const deleteSong = asyncHandler(async (request, response) => {
-    // Validate request
-    const errors = validationResult(request);
-    if (!errors.isEmpty()) {
-        throw new ValidationError(errors.array());
-    }
+  // Validate request
+  const errors = validationResult(request);
+  if (!errors.isEmpty()) {
+    throw new ValidationError(errors.array());
+  }
 
-    // extract song id from params
-    const { _id } = request.params;
+  // extract song id from params
+  const { _id } = request.params;
 
-    // fetch song details and if song belongs to album update song array
-    const song = await findSongService(_id);
-    if (!(song && song.albumId)) {
-        throw new CustomError("album not found", 401);
-    }
-    await findAndUpdateAlbumService("pull", song.albumId, song._id);
+  // fetch song details and if song belongs to album update song array
+  const song = await findSongService(_id);
+  if (!(song && song.albumId)) {
+    throw new CustomError('album not found', 401);
+  }
+  await findAndUpdateAlbumService('pull', song.albumId, song._id);
 
-    // delete song
-    await deleteSongService(_id);
+  // delete song
+  await deleteSongService(_id);
 
-    return response.status(200).json({ message: "Song deleted successfully" });
+  return response.status(200).json({ message: 'Song deleted successfully' });
 });
 export { checkAdmin, createSong, deleteSong, createAlbum, deleteAlbum };

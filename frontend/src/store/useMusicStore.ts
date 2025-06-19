@@ -338,7 +338,7 @@ const useMusicStore = create<MusicStoreStateTS>()((set) => ({
         songs: {
           ...state.songs,
           songs: state.songs.songs.map((song) =>
-            song.albumId === id ? { ...song, albumId: null } : song,
+            song.albumId === id ? { ...song, albumId: null } : song
           ),
         },
       }));
