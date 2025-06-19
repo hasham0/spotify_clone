@@ -44,7 +44,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.CROSS_ORIGIN, // Allow frontend requests
+    origin: [process.env.CROSS_ORIGIN1, process.env.CROSS_ORIGIN2], // Allow frontend requests
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     preflightContinue: false,
