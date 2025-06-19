@@ -8,45 +8,45 @@ type Props = { statistics: any };
 const DashboardStatistics = ({ statistics }: Props) => {
   const {  fetchStatistics } = useMusicStore();
   const [stats, setStats] = useState({
-    musicValue: statistics.statistics.totalSongs,
-    albumValue: statistics.statistics.totalAlbums,
-    artistValue: statistics.statistics.totalArtists,
-    userValue: statistics.statistics.totalUsers,
+    musicValue: statistics.statistics.totalSongs.toLocaleString(),
+    albumValue: statistics.statistics.totalAlbums.toLocaleString(),
+    artistValue: statistics.statistics.totalArtists.toLocaleString(),
+    userValue: statistics.statistics.totalUsers.toLocaleString(),
   });
   useEffect(() => {
     setStats({
-      musicValue: statistics.statistics.totalSongs,
-      albumValue: statistics.statistics.totalAlbums,
-      artistValue: statistics.statistics.totalArtists,
-      userValue: statistics.statistics.totalUsers,
-    });
+      musicValue: statistics.statistics.totalSongs.toLocaleString(),
+      albumValue: statistics.statistics.totalAlbums.toLocaleString(),
+      artistValue: statistics.statistics.totalArtists.toLocaleString(),
+      userValue: statistics.statistics.totalUsers.toLocaleString(),
+      });
   }, [statistics, fetchStatistics]);
   const statisticsData = [
     {
       icon: ListMusic,
       label: "Total Songs",
-      value: statistics.totalSongs.toLocaleString(),
+      value: stats.musicValue,
       bgColor: "bg-emerald-500/10",
       iconColor: "text-emerald-500",
     },
     {
       icon: Library,
       label: "Total Albums",
-      value: statistics.totalAlbums.toLocaleString(),
+      value: stats.albumValue,
       bgColor: "bg-violet-500/10",
       iconColor: "text-violet-500",
     },
     {
       icon: Users2,
       label: "Total Artists",
-      value: statistics.totalArtists.toLocaleString(),
+      value: stats.artistValue,
       bgColor: "bg-orange-500/10",
       iconColor: "text-orange-500",
     },
     {
       icon: PlayCircle,
       label: "Total Users",
-      value: statistics.totalUsers.toLocaleString(),
+      value: stats.userValue,
       bgColor: "bg-sky-500/10",
       iconColor: "text-sky-500",
     },
